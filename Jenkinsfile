@@ -21,7 +21,7 @@ pipeline {
         }
         stage('Deploy Container') {
             steps {
-                sh 'docker run -d -p 8080:8080 yaksh0212/java-app'
+                sh 'docker run -d -p 8089:8080 yaksh0212/java-app'
             }
         }
     }
