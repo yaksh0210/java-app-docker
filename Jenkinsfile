@@ -3,7 +3,7 @@ pipeline {
     stages {
         stage('Clone Repository') {
             steps {
-                git 'https://github.com/yaksh0210/java-app-docker.git'
+                git 'https://github.com/yaksh0210/java-app-docker.git', branch: 'main'
             }
         }
         stage('Build Docker Image') {
