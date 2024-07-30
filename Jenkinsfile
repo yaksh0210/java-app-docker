@@ -8,7 +8,12 @@ pipeline {
         }
         stage('Build Docker Image') {
             steps {
-                sh 'docker build -t yaksh0212/java-app .'
+                // sh 'docker build -t yaksh0212/java-app .'
+                script{
+                    docker.withRegistry('',Docker_credentials){
+                        def customImage = docker.build("yaksh0212/java-app .")
+                        customImage.push()
+                    }
             }
         }
         stage('Push Docker Image') {
