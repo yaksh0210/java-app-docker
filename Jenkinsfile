@@ -16,6 +16,7 @@ pipeline {
                     }
             }
         }
+    }
         stage('Push Docker Image') {
             steps {
                 withCredentials([usernamePassword(credentialsId: 'Docker_credential')]) {
