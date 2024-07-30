@@ -13,7 +13,7 @@ pipeline {
         }
         stage('Push Docker Image') {
             steps {
-                withCredentials([usernamePassword(credentialsId: '9312c423-da11-4cd1-857a-9c5446d91de6')]) {
+                withCredentials([usernamePassword(credentialsId: 'Docker_credential')]) {
                     sh 'docker login'
                     sh 'docker push yaksh0212/java-app'
                 }
