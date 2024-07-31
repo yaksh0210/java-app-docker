@@ -1,13 +1,10 @@
-FROM openjdk:8-jdk-alpine
+ FROM openjdk:11
 
-WORKDIR /app
+ COPY . /usr/src/java-app
 
-COPY . /app
+ WORKDIR /usr/src/java-app
 
-RUN javac /src/main/java/HelloWorld.java
+ RUN javac HelloWorld.java
 
-CMD [ "java","/src/main/java/HelloWorld" ]
-
-
-
-
+ CMD ["java", "HelloWorld.java"]
+ 
