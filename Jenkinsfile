@@ -25,7 +25,7 @@ pipeline {
             steps {
                 script {
                     docker.withRegistry('', registryCredential) {
-                        def runContainer = docker.image("yaksh0212/java-app:${env.BUILD_ID}").run
+                        def runContainer = docker.image("yaksh0212/java-app:${env.BUILD_ID}").run('--name ${env.BUILD_ID} -d')
                         echo "Container ID: ${runContainer.id}"
                     }
                 }
