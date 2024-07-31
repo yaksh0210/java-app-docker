@@ -4,9 +4,9 @@ WORKDIR /app
 
 COPY . /app
 
-RUN javac Main.java
+RUN javac /src/main/java/HelloWorld.java
 
-CMD [ "java","Main" ]
+CMD [ "java","/src/main/java/HelloWorld" ]
 
 
 
