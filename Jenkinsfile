@@ -1,34 +1,44 @@
 pipeline {
     agent any
-    stages {
-        stage('Clone Repository') {
-            steps {
-                git url:'https://github.com/yaksh0210/java-app-docker.git', branch: 'main'
-            }
-        }
-        stage('Build Docker Image') {
-            steps {
-                // sh 'docker build -t yaksh0212/java-app .'
-                script{
-                    docker.withRegistry('',Docker_credentials){
-                        def customImage = docker.build("yaksh0212/java-app .")
-                        customImage.push()
-                    }
-            }
-        }
+    environment {
+        registry = 'docker.io'  
+        registryCredential = 'Docker_credentials' 
     }
-        stage('Push Docker Image') {
+    stages {
+        stage('Checkout') {
             steps {
-                withCredentials([usernamePassword(credentialsId: 'Docker_credential')]) {
-                    sh ' docker login'
-                    sh ' docker push yaksh0212/java-app'
+                git url: 'https://github.com/yaksh0210/java-app-docker.git', branch: 'main'
+            }
+        }
+        stage('build image') {
+            steps{
+                script{
+                    docker.withRegistry('', registryCredential){
+                        def customImage = docker.build("yaksh0212/java-app:${env.BUILD_ID}")
+                        customImage.push()
+
+                    }
                 }
             }
         }
         stage('Deploy Container') {
             steps {
-                sh 'docker run -d -p 8089:8080 yaksh0212/java-app'
+                script {
+                    docker.withRegistry('', registryCredential) {
+                        def runContainer = docker.image("yaksh0212/java-app:${env.BUILD_ID}").run('--name mynew-container -d')
+                        echo "Container ID: ${runContainer.id}"
+                    }
+                }
+            }
+        }
+        stage('Output') {
+            steps{
+                script{
+                    sh 'java /src/main/java/App.java'
+                }
             }
         }
     }
+
 }
+ 
