@@ -34,7 +34,7 @@ pipeline {
         stage('Output') {
             steps{
                 script{
-                    sh 'java /src/main/java/App.java'
+                    sh 'java HelloWorld.java'
                 }
             }
         }
