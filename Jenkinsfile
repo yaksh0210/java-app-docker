@@ -25,20 +25,12 @@ pipeline {
             steps {
                 script {
                     docker.withRegistry('', registryCredential) {
-                        def runContainer = docker.image("yaksh0212/java-app:${env.BUILD_ID}").run('--name ${env.BUILD_ID} -d')
+                        def runContainer = docker.image("yaksh0212/java-app:${env.BUILD_ID}").run('--name newcontainer -d')
                         echo "Container ID: ${runContainer.id}"
                     }
                 }
             }
         }
-        stage('Output') {
-            steps{
-                script{
-                    sh 'java HelloWorld.java'
-                }
-            }
-        }
     }
-
 }
  
